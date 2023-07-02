@@ -30,3 +30,31 @@
 *.exe
 *.out
 *.app
+
+# Compilation Folder
+build/
+
+# CMake
+CMakeLists.txt.user
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+_deps
+*.tcl
+*.cmake
+tests
+*-backup~
+*-backup.md5~
+defaults.cfg
+
+# Visual Studio
+*.aps
+*.bsc
+*.ncb
+*.vscode
