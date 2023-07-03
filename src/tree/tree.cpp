@@ -4,12 +4,14 @@
 Tree::Tree() {
     this->depth = 0;
     this->root = nullptr;
+    this->goal = nullptr;
 }
 
 // Constructor with depth
 Tree::Tree(int depth) {
     this->depth = depth;
     this->root = nullptr;
+    this->goal = nullptr;
 }
 
 // Destructor
@@ -18,6 +20,9 @@ Tree::~Tree() {
 
     // Set the depth to 0
     this->depth = 0;
+
+    // Set the goal to null
+    this->goal = nullptr;
 }
 
 // Delete all nodes in the tree
@@ -113,17 +118,11 @@ void Tree::print(int depth) {
         this->root = this->root->left;
     }
 
+    // Print the goal node
+    std::cout << "Goal Node:" << std::endl;
+    std::cout << this->goal->d << " " << this->goal->g << " " << this->goal->h << " " << this->goal->f << std::endl;
+
     return;
-}
-
-// Set the depth of the tree
-void Tree::setDepth(int depth) {
-    this->depth = depth;
-}
-
-// Get the depth of the tree
-int Tree::getDepth() {
-    return this->depth;
 }
 
 // Generate a random tree with the same cost
@@ -138,6 +137,8 @@ Tree::Node* Tree::genRandTreeSameCost(int depth) {
     newNode->g = 1;  
     newNode->h = 1;  
     newNode->f = newNode->g + newNode->h;
+
+    newNode->id = rand() % 10000 + 1; // A random number between 1 and 10000
 
     // generate the left and right subtrees recursively
     newNode->left = genRandTreeSameCost(depth - 1);
@@ -167,6 +168,8 @@ Tree::Node* Tree::genRandTreeDiffCost(int depth) {
     newNode->h = rand() % 10 + 1;  
     newNode->f = newNode->g + newNode->h;
 
+    newNode->id = rand() % 10000 + 1; // A random number between 1 and 10000
+
     // generate the left and right subtrees recursively
     newNode->left = genRandTreeDiffCost(depth - 1);
     newNode->right = genRandTreeDiffCost(depth - 1);
@@ -182,3 +185,42 @@ Tree::Node* Tree::genRandTreeDiffCost(int depth) {
     return newNode;
 }
 
+// Generate a goal node 
+void Tree::genGoalNode() { 
+    // Choose a random node in the tree given the depth
+    int randNode = rand() % (this->depth + 1);
+
+    // Set the goal node to the random node
+    this->goal = this->root;
+
+    // Traverse the tree to the random node
+    for (int i = 0; i < randNode; i++) {
+        // If the goal node has a left child, set the goal node to the left child
+        if (this->goal->left != nullptr) {
+            this->goal = this->goal->left;
+        }
+        // If the goal node does not have a left child, set the goal node to the right child
+        else {
+            this->goal = this->goal->right;
+        }
+    }
+}
+
+// Delete a node in the tree
+void Tree::removeNode(Node* node) {
+    // If the node is null, return
+    if (node == nullptr) {
+        return;
+    }
+
+    // If the node is the root, delete the root
+    if (node == this->root) {
+        delete this->root;
+        this->root = nullptr;
+        return;
+    }
+
+    // If the node is not the root, delete the node
+    delete node;
+    node = nullptr;
+}
