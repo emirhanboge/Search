@@ -24,6 +24,9 @@ include_directories(AFTER SYSTEM src/)
 target_sources(tests PRIVATE test/tree/tree.test.cpp)
 target_sources(tests PRIVATE src/tree/tree.cpp)
 
+target_sources(tests PRIVATE test/uninformed/uninformed.test.cpp)
+target_sources(tests PRIVATE src/uninformed/uninformed.cpp)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 target_compile_options(tests PRIVATE -Isrc)

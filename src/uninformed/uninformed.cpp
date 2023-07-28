@@ -236,3 +236,237 @@ void Uninformed::UCS() { // Uniform Cost Search
     // If the goal is not found, return
     return;
 }
+
+void Uninformed::DFS() { 
+    // Create a tree
+    this->createRandomTree(5, true);
+
+    // Create a stack
+    std::stack<Tree::Node*> stack;
+
+    // Vector to keep track of visited nodes
+    std::vector<Tree::Node*> reached;
+
+    // If the root is null, return
+    if (this->tree->root == nullptr) {
+        return;
+    }
+
+    // If the root is the goal, return
+    if (this->tree->root->id == this->tree->goal->id) {
+        reached.push_back(this->tree->root);
+        // Visualize the path
+        this->visualizePath(reached);
+        return;
+    }
+
+    // Push the root to the stack
+    stack.push(this->tree->root);
+
+    // While the stack is not empty
+    while (!stack.empty()) {
+        // pop the top of the stack
+        Tree::Node* node = stack.top();
+        stack.pop();
+
+        // If this node has already been reached with a shorter path, skip it
+        if (std::find(reached.begin(), reached.end(), node) != reached.end()) {
+            continue;
+        }
+
+        // We have reached this node with the shortest possible path
+        reached.push_back(node);
+
+        // For the left and right children
+        for (int i = 0; i < 2; i++) {
+            Tree::Node* child;
+            if (i == 0) { // Left child
+                child = node->left;
+            } else { // Right child
+                child = node->right;
+            }
+
+            int id = child->id;
+
+            // If the child is null, continue
+            if (child == nullptr) {
+                continue;
+            }
+
+            // If the child is the goal, return
+            if (id == this->tree->goal->id) {
+                // Add the goal to the reached vector
+                reached.push_back(child);
+                // Visualize the path
+                this->visualizePath(reached);
+                return;
+            }
+
+            // Push the child to the stack
+            stack.push(child);
+        }
+    }
+
+    // Visualize the path
+    this->visualizePath(reached);
+
+    // If the goal is not found, return
+    return;
+}
+
+void Uninformed::IDS() {
+    // Create a tree
+    this->createRandomTree(5, true);
+
+    // Vector to keep track of visited nodes
+    std::vector<Tree::Node*> reached;
+
+    // If the root is null, return
+    if (this->tree->root == nullptr) {
+        return;
+    }
+
+    // If the root is the goal, return
+    if (this->tree->root->id == this->tree->goal->id) {
+        reached.push_back(this->tree->root);
+        // Visualize the path
+        this->visualizePath(reached);
+        return;
+    }
+
+    // For each depth
+    for (int depth = 0; depth < 100; depth++) {
+        // Create a stack
+        std::stack<Tree::Node*> stack;
+
+        // Push the root to the stack
+        stack.push(this->tree->root);
+
+        // While the stack is not empty
+        while (!stack.empty()) {
+            // pop the top of the stack
+            Tree::Node* node = stack.top();
+            stack.pop();
+
+            // If this node has already been reached with a shorter path, skip it
+            if (std::find(reached.begin(), reached.end(), node) != reached.end()) {
+                continue;
+            }
+
+            // We have reached this node with the shortest possible path
+            reached.push_back(node);
+
+            // For the left and right children
+            for (int i = 0; i < 2; i++) {
+                Tree::Node* child;
+                if (i == 0) { // Left child
+                    child = node->left;
+                } else { // Right child
+                    child = node->right;
+                }
+
+                int id = child->id;
+
+                // If the child is null, continue
+                if (child == nullptr) {
+                    continue;
+                }
+
+                // If the child is the goal, return
+                if (id == this->tree->goal->id) {
+                    // Add the goal to the reached vector
+                    reached.push_back(child);
+                    // Visualize the path
+                    this->visualizePath(reached);
+                    return;
+                }
+
+                // If the depth is less than the max depth, push the child to the stack
+                if (child->d < depth) {
+                    stack.push(child);
+                }
+            }
+        }}
+
+        // Clear the reached vector
+        reached.clear();
+}
+
+void Uninformed::DLS(int depth) {
+    // Create a tree
+    this->createRandomTree(5, true);
+
+    // Create a stack
+    std::stack<Tree::Node*> stack;
+
+    // Vector to keep track of visited nodes
+    std::vector<Tree::Node*> reached;
+
+    // If the root is null, return
+    if (this->tree->root == nullptr) {
+        return;
+    }
+
+    // If the root is the goal, return
+    if (this->tree->root->id == this->tree->goal->id) {
+        reached.push_back(this->tree->root);
+        // Visualize the path
+        this->visualizePath(reached);
+        return;
+    }
+
+    // Push the root to the stack
+    stack.push(this->tree->root);
+
+    // While the stack is not empty
+    while (!stack.empty()) {
+        // pop the top of the stack
+        Tree::Node* node = stack.top();
+        stack.pop();
+
+        // If this node has already been reached with a shorter path, skip it
+        if (std::find(reached.begin(), reached.end(), node) != reached.end()) {
+            continue;
+        }
+
+        // We have reached this node with the shortest possible path
+        reached.push_back(node);
+
+        // For the left and right children
+        for (int i = 0; i < 2; i++) {
+            Tree::Node* child;
+            if (i == 0) { // Left child
+                child = node->left;
+            } else { // Right child
+                child = node->right;
+            }
+
+            int id = child->id;
+
+            // If the child is null, continue
+            if (child == nullptr) {
+                continue;
+            }
+
+            // If the child is the goal, return
+            if (id == this->tree->goal->id) {
+                // Add the goal to the reached vector
+                reached.push_back(child);
+                // Visualize the path
+                this->visualizePath(reached);
+                return;
+            }
+
+            // If the depth is less than the max depth, push the child to the stack
+            if (child->d < depth) {
+                stack.push(child);
+            }
+        }
+    }
+
+    // Visualize the path
+    this->visualizePath(reached);
+
+    // If the goal is not found, return
+    return;
+}
