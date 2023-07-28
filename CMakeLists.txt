@@ -27,6 +27,9 @@ target_sources(tests PRIVATE src/tree/tree.cpp)
 target_sources(tests PRIVATE test/uninformed/uninformed.test.cpp)
 target_sources(tests PRIVATE src/uninformed/uninformed.cpp)
 
+target_sources(tests PRIVATE test/informed/informed.test.cpp)
+target_sources(tests PRIVATE src/informed/informed.cpp)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 target_compile_options(tests PRIVATE -Isrc)
